@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% block head %}
+        {% include 'global/head.html' %}
+    {% endblock %}
+
+    <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+        <div class="full">
+            {% include 'global/menu.html' %}
+
+            {% block content %}
+            {% endblock %}
+
+            {% include 'global/footer.html' %}
+        </div>
+        {% include 'global/js.html' %}
+
+        {% block js_extras %}
+        {% endblock %}
+    </body>
+
+</html>

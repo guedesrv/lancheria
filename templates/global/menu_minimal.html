@@ -1,0 +1,77 @@
+{% load staticfiles %}
+<div class="page-sidebar navbar-collapse collapse ">
+    <!-- BEGIN SIDEBAR MENU -->
+    <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-compact  " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+        <li class="nav-item start ">
+            <a href="{% url 'core:index' %}" class="nav-link">
+                <i class="fa fa-tachometer"></i>
+            </a>
+
+        </li>
+        <li class="nav-item start ">
+            <a href="{% url 'contacts:company_list' %}" class="nav-link">
+                <i class="fa fa-building"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'contacts:person_list' %}" class="nav-link">
+                <i class="fa fa-users"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'products:product_list' %}" class="nav-link">
+                <i class="fa fa-shopping-bag"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'sales:opportunity_list' %}" class="nav-link">
+                <i class="fa fa-bullseye"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'tasks:task_list' %}" class="nav-link">
+                <i class="fa fa-calendar"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'marketing:index' %}" class="nav-link">
+                <i class="fa fa-lightbulb-o"></i>
+            </a>
+        </li>
+
+<!-- MODULES -->
+
+        {% if request.user.client.mod_contract %}
+        <li class="nav-item">
+            <a href="{% url 'contracts:contract_index' %}" class="nav-link">
+                <i class="fa fa-book"></i>
+            </a>
+        </li>
+        {% endif %}
+
+        {% if request.user.client.mod_clinic %}
+        <li class="nav-item">
+            <a href="{% url 'clinic:index' %}" class="nav-link">
+                <i class="fa fa-heartbeat"></i>
+            </a>
+        </li>
+        {% endif %}
+
+<!-- END MODULES -->
+        <li class="nav-item">
+            <a href="{% url 'reports:index' %}" class="nav-link">
+                <i class="fa fa-file"></i>
+            </a>
+        </li>
+
+        {% if request.user.is_manager %}
+        <li class="nav-item">
+            <a href="{% url 'core:settings_list' %}" class="nav-link">
+                <i class="fa fa-gear"></i>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</div>
+

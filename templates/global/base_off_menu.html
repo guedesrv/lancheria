@@ -1,0 +1,108 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+    {% block head %}
+        {% include 'global/head.html' %}
+    {% endblock %}
+
+    <body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed page-container-bg-solid ">
+
+        {% include 'global/header.html' %}
+
+        <!-- BEGIN HEADER & CONTENT DIVIDER -->
+        <div class="clearfix"> </div>
+        <!-- END HEADER & CONTENT DIVIDER -->
+
+
+        <!-- BEGIN CONTAINER -->
+        <div class="page-container">
+            <!-- BEGIN SIDEBAR MENU -->
+            <div class="page-sidebar-wrapper">
+                {% include 'global/menu_minimal.html' %}
+            </div>
+
+            <!-- BEGIN CONTENT -->
+            <div class="page-content-wrapper">
+                {% block content %}
+                {% endblock %}
+            </div>
+
+        </div>
+        <!-- END CONTAINER -->
+
+        {% include 'global/footer.html' %}
+        {% include 'global/js.html' %}
+
+        {% block js_extras %}
+        {% endblock %}
+        <script type="text/javascript">
+            /**
+            Custom module for you to write your own javascript functions
+            **/
+            function tarefas () {
+
+                $.ajax({
+                    url: '{% url 'tasks:task_search' %}',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {user: '{{ user.pk }}', client: '{{ user.client.pk }}'},
+                })
+                .success(function(json) {
+                    data = json.length;
+                    if (data > 1){
+                        $('#qtd_task1').html(data);
+                        $('#qtd_task2').html(data + ' Tarefas do dia');
+                    }else if(data == 1){
+                        $('#qtd_task1').html(data);
+                        $('#qtd_task2').html(data + ' Tarefa do dia');
+                    }else{
+                        $('#qtd_task2').html(data + ' Tarefas do dia');
+                    }
+                })
+                .fail(function(json) {
+                    //console.log("error");
+                });
+                //return false;
+            }
+
+            function notificador () {
+
+                $.ajax({
+                    url: '{% url 'core:notification_search' %}',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {},
+                })
+                .success(function(json) {
+                    data = json.length;
+                    if (data > 1){
+                        $('#qtd_notify1').html(data);
+                        $('#qtd_notify2').html(data + ' Notificações');
+                    }else if(data == 1){
+                        $('#qtd_notify1').html(data);
+                        $('#qtd_notify2').html(data + ' Notificação');
+                    }else{
+                        $('#qtd_notify2').html(data + ' Notificações');
+                    }
+                })
+                .error(function(data) {
+                    console.log(data);
+                })
+                .fail(function(json) {
+                    //console.log("error");
+                });
+                //return false;
+            }
+
+            jQuery(document).ready(function() {
+                tarefas();
+                notificador();
+            });
+
+        </script>
+
+    </body>
+
+</html>
